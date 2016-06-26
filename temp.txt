@@ -1,0 +1,51 @@
+	TrustManager[] tm = { new MyX509TrustManager() };
+        SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
+        sslContext.init(null, tm, new java.security.SecureRandom());
+        // 从上述SSLContext对象中得到SSLSocketFactory对象
+        SSLSocketFactory ssf = sslContext.getSocketFactory();
+        // 创建URL对象
+        URL myURL = new URL("https://ebanks.gdb.com.cn/sperbank/perbankLogin.jsp");
+        // 创建HttpsURLConnection对象，并设置其SSLSocketFactory对象
+        HttpsURLConnection httpsConn = (HttpsURLConnection) myURL.openConnection();
+        httpsConn.setSSLSocketFactory(ssf);
+        // 取得该连接的输入流，以读取响应内容
+        InputStreamReader insr = new InputStreamReader(httpsConn.getInputStream());
+        // 读取服务器的响应内容并显示
+        int respInt = insr.read();
+        while (respInt != -1) {
+            System.out.print((char) respInt);
+            respInt = insr.read();
+        }
+
+
+
+"misiwbot@sina.cn:sina62675663"
+
+"misiwbot@sina.cn:sina62675663" https://m.api.weibo.com/2/messages/receive.json?source=2544665843&uid=3306169867
+USERNAME:PASSWORD
+
+
+String authStr = user + ":" + pass;
+String authEncoded = Base64.encodeBytes(authStr.getBytes());
+connection.setRequestProperty("Authorization", "Basic " + authEncoded);
+
+
+
+
+
+	public Response get(String url, PostParameter[] params)
+			throws WeiboException {
+		log("Request:");
+		log("GET:" + url);
+		if (null != params && params.length > 0) {
+			String encodedParams = HttpClient.encodeParameters(params);
+			if (-1 == url.indexOf("?")) {
+				url += "?" + encodedParams;
+			} else {
+				url += "&" + encodedParams;
+			}
+		}
+		GetMethod getmethod = new GetMethod(url);
+		return httpRequest(getmethod);
+
+	}
